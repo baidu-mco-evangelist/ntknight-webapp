@@ -1,0 +1,49 @@
+/* CSS Document */
+
+body{
+	background-image:url(../images/main/image_bigbj.png);
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0
+}
+
+#nav{
+	background-image:url(../images/main/file_tital_bj.png);
+	width:100%;
+	position:fixed;
+	height:44px;
+}
+
+#nav table{
+	width:100%;
+	height:44px;	
+}
+
+
+#mainPageIcon{
+	width:110px;
+	height:30px;
+	padding-left:15px;
+}
+
+#myNtIcon{	
+	width:22px;
+	height:22px;
+}
+
+#moreInfoIcon{
+	width:27px;
+	height:7px;
+	padding-right:14px;
+	
+}
+
+#nav_border{
+	background-image:url(../images/main/file_tital_bj02.png);
+	width:100%;
+	height:4px;
+	position:fixed;
+	top:44px;
+	z-index:20
+}

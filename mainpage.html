@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>详情页 西二旗夜话</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />  
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+<!--  Android icon:  
+<link rel="shortcut icon" href="icon.png">
+-->
+
+<!--  iOS 图标:  
+	<link rel="apple-touch-icon" href="icon.png">
+-->  
+
+<!--
+<link rel="apple-touch-startup-image" href="images/loading/loading.png">
+-->
+
+
+<link href="css/mainpage.css" rel="stylesheet" type="text/css">
+<link href="css/navbase1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+</head>
+
+<body>
+
+	<div id="nav">
+   		<table border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+        	<tr>
+            	<td width="65%">
+                	<img src="images/main/file_tital_meicon_press220-60.png"  id="mainPageIcon" onClick="loadMainPage()" /> 
+                </td>
+                
+                <td width="21%">
+                	<img src="images/main/file_tital_meicon.png" id="myNtIcon" onClick="loadMyNtPage()" onMouseOver="myNtIncoPress()" onMouseOut="myNtIconMouseOut()"/>
+                </td>
+                
+                <td width="14%" >
+                	<img src="images/main/file_tital_moreicon.png" width="64"  id="moreInfoIcon" onClick="loadMoreInfoPage()"  onMouseOver="moreInfoIncoPress()" onMouseOut="moreInfoIncoMouseOut()"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="nav_border">
+    </div>
+    
+    <div id="content">
+    </div>
+    
+</body>
+<script type="text/javascript" src="js/mainpage.js"></script>
+
+</html>

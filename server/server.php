@@ -1,6 +1,7 @@
 <?php
 
 require_once('../pcs.class.php');
+//require_once('../bcs.class.php');
 
 if($_SERVER['REQUEST_METHOD'] === "POST" ){
   $method = $_POST['method'];
@@ -8,18 +9,17 @@ if($_SERVER['REQUEST_METHOD'] === "POST" ){
   $method = $_GET['method'];
 }
 
-$access_token='3.cb3db0f757313660b764a2a9625d838b.2592000.1352254558.1831690938-379902';
-
 //set dename 
 $dbname = 'IPMtwoPWhephbxhWVYiL';
 
-$host = getenv('HTTP_BAE_ENV_ADDR_SQL_IP');
+$sql_host = getenv('HTTP_BAE_ENV_ADDR_SQL_IP');
 $port = getenv('HTTP_BAE_ENV_ADDR_SQL_PORT');
 $user = getenv('HTTP_BAE_ENV_AK');
 $pwd = getenv('HTTP_BAE_ENV_SK');
 
 
-$link = @mysql_connect("{$host}:{$port}",$user,$pwd,true);
+
+$link = @mysql_connect("{$sql_host}:{$port}",$user,$pwd,true);
 if(!$link) {
 	die("Connect Server Failed");
 }
@@ -34,7 +34,7 @@ mysql_query("set names utf8",$link);
 //get activity list from mysql
 if($method == "getActivityList"){
 
-	$sql = "select activity_name,activity_time,activity_address,flag from activity_info order by activity_id asc";	
+	$sql = "select activity_id,activity_name,activity_time,activity_address,flag from activity_info order by activity_id asc";	
 	$ret = mysql_query($sql,$link);
 	
 	$i = 0;
@@ -42,15 +42,28 @@ if($method == "getActivityList"){
 	$activityTimeList = array();
 	$activityAddress = array();
 	$flagList = array();
+	$currentPerson = array();
+	$activityIdList = array();
+
 	
 	while($row = mysql_fetch_assoc($ret) ){
+		$activityIdList[$i] = $row['activity_id'];
 		$activityList[$i] = $row['activity_name'];
 		$activityTimeList[$i] = $row['activity_time'];
 		$activityAddress[$i] = $row['activity_address'];
+		
+		$activity_id = $row['activity_id'];
+		$selectIDSql = "select count(member_id) from member_join_activity where activity_id='$activity_id'";
+		$ret2 = mysql_query($selectIDSql,$link);
+		
+		while($count_member = mysql_fetch_assoc($ret2)){
+			$currentPerson[$i] = $count_member['count(member_id)'];
+		}
+				
 		$flagList[$i++] = $row['flag'];
 	}
 	
-	echo json_encode(array('activityList'=> $activityList,'activityTimeList'=>$activityTimeList,'activityAddressList'=>$activityAddress,'flagList'=>$flagList));
+	echo json_encode(array('activityIdList'=>$activityIdList,'activityList'=> $activityList,'activityTimeList'=>$activityTimeList,'activityAddressList'=>$activityAddress,'flagList'=>$flagList,'currentPersonList'=>$currentPerson));
 
 }
 
@@ -81,6 +94,23 @@ if($method == "getActivityInfo"){
 	$ret = mysql_query($sql,$link);
 		
 	while($row = mysql_fetch_assoc($ret) ){	
+		$activity_id = $row['activity_id'];
+		
+		$selectIDSql = "select count(picture_url) from activity_picture where activity_id='$activity_id'";
+		$ret2 = mysql_query($selectIDSql,$link);
+		
+		while($count_picture_row = mysql_fetch_assoc($ret2)){
+			$count_picture = $count_picture_row['count(picture_url)'];
+		}
+		
+		$selectCommentSql = "select count(comment) from activity_comment where activity_id='$activity_id'";
+		
+		$ret3 = mysql_query($selectCommentSql,$link);
+		
+		while($count_momment_row = mysql_fetch_assoc($ret3)){
+			$count_comment = $count_momment_row['count(comment)'];
+		}
+		
 		$activity_time = $row['activity_time'];
 		$activity_address = $row['activity_address'];
 		$activity_introduce = $row['activity_introduce'];
@@ -88,56 +118,104 @@ if($method == "getActivityInfo"){
       	$flag = $row['flag'];
 	}
 	
-	echo json_encode(array('activity_name'=> $activity_name,'flag'=>$flag,'activity_time'=> $activity_time,'activity_address'=> $activity_address,'activity_introduce'=> $activity_introduce,"count_person"=>$count_person));
+	echo json_encode(array('activity_name'=> $activity_name,'flag'=>$flag,'activity_time'=> $activity_time,'activity_address'=> $activity_address,'activity_introduce'=> $activity_introduce,'count_person'=>$count_person,'count_picture'=>$count_picture,'count_comment'=>$count_comment));
 	
+}
+
+//get picture list
+if($method == "getPictureList"){
+	
+	$activity_id = $_GET['activity_id'];
+	
+	$sql="select picture_url,picture_name from activity_picture where activity_id='$activity_id'";
+	
+	$ret = mysql_query($sql,$link);
+	$pictureUrlList = array();
+	$pictureNameList = array();
+	$i = 0;
+	
+	while($row = mysql_fetch_assoc($ret)){
+		$pictureUrlList[$i] = $row['picture_url'];
+		$pictureNameList[$i++] = $row['picture_name'];
+	}
+	 
+	echo json_encode(array('pictureUrlList'=>$pictureUrlList,'pictureNameList'=>$pictureNameList));
 }
 
 
 //save photo to server
 if($method == "savePhotoToServer"){
-
-	$source_file = $_POST['source_file'];
-	$target_file = urldecode($_POST['target_file']);
-
-	$auth = array (
-		'access_token' => $access_token,
-	);
 	
-	$pcs = new BaiduPCS($auth);
-	$pcs->set_ssl(true); 
-	
-	if (!($data = $pcs->upload_file($source_file,$target_file))){
-      
-		echo json_encode(array("error_message"=>$pcs->get_error_message()));
-	} else {
-		echo json_encode($data);
+	$activity_id = $_GET['activity_id'];
+	$object = $_GET['source_path'];
+	$picture_name = $object.substr(strrpos('/')+1,strrpos('.'));
+	$fileUpload = $_GET['target_path'];
+	$baiduBCS = new BaiduBCS();
+	$response = $baiduBCS->create_object( $bucket, $object, $fileUpload );
+	if (! $response->isOK ()) {
+		die ( "Create object failed." );
 	}
-
+	
+	$url = $baiduBCS->generate_get_object_url( $bucket, $object);
+	
+	$sql = "insert into activity_picture values('$activity_id','$url','$picture_name')";  
+	$ret = mysql_query($sql,$link);
+	
 }
 
-//save photo to pcs
-if($method == "savePhotoToPCS"){
-
+if($method == 'savePhotoToPCS'){
+	
+	$activity_name = $_GET['activity_name'];
 	$access_token = $_GET['access_token'];
-	$source_file = $_GET['source_file'];
-	$target_file = $_GET['target_file'];
-
-	$auth = array (
-		'access_token' => $access_token,
-	);
+	$source_file_list = array();
+	$source_file_list = $_GET['source_file'];
+	$picture_name_list = array();
+	$picture_name_list = $_GET['picture_name_list'];
+		
+	$bucket = 'ntknight';
+	$baiduBCS = new BaiduBCS($ak, $sk, $host);
 	
-	$app = 'ntknight';
+	for($i=0; $i<count($picture_name_list); $i++){
 
-	$pcs = new BaiduPCS($auth);
-	$pcs->set_ssl(true); 
+		$object = '/' . $activity_name . '/' . $picture_name_list[$i];
+		$fileWriteTo = './a.' . time () . '.png';
+		
+	/*	$response = $baiduBCS->create_object ( $bucket, $object, $fileUpload );
+		if (! $response->isOK ()) {
+			die ( "Create object failed." );
+		}
+		echo "Create object[$object] in bucket[$bucket] success\n";*/
+		
+		$opt = array (
+				"fileWriteTo" => $fileWriteTo, 
+				);
+		$response = $baiduBCS->get_object ( $bucket, $object, $opt );
+		if (! $response->isOK ()) {
+			die ( "Download object failed." );
+		}
+		echo "Download object[$object] in bucket[$bucket] success. And write to [$fileWriteTo]\n";
+		
+		$auth = array (
+			'access_token' => $access_token,
+		);
+		
+		$target_dir = "/apps/ntknight/" . $activity_name . '/' ;
+		
+		echo $target_file;
+		
+		$pcs = new BaiduPCS($auth);
+		$pcs->set_ssl(true); 
+		
+		if (!($data = $pcs->upload_file($fileWriteTo,$target_dir,$picture_name_list[$i]))){
+		  
+			echo json_encode(array("error_message"=>$pcs->get_error_message()));
+		} else {
+			echo json_encode($data);
+		}
 	
-	if (!($data = $pcs->upload_file($source_file,$target_file))){
-      
-		echo json_encode(array("error_message"=>$pcs->get_error_message()));
-	} else {
-		echo json_encode($data);
+		unlink($fileWriteTo);
+		echo "this is end";
 	}
-
 }
 
 //insert members infomation to mysql 
@@ -146,14 +224,13 @@ if($method == "addMember"){
 	$member_name = $_POST['member_name'];
 	$member_company = $_POST['member_company'];
 	$member_position = $_POST['member_position'];
-	$member_phone = $_POST['member_photo_number'];
-	$member_Email = $_POST['member_Email'];
-	$member_tech_field = $_POST['member_tech_field'];
-	$hello_world = $_POST['hello_world'];
-	$user_id = $_POST['user_id'];
-	$user_name = $_POST['user_name'];
+	$member_phone = $_POST['member_phone_number'];
+	$member_Email = $_POST['member_email'];
+	$member_user_name = $_POST['member_user_name'];
+	$password= $_POST['password'];
+	$sex = $_POST['sex'];
 	
-	$sql = "insert into member_info(member_name,member_company,member_position,member_phone,member_Email,member_tech_field,hello_world) values('$member_name','$member_company','$member_position','$member_phone','$member_Email','$member_tech_field','$hello_world')";
+	$sql = "insert into member_info(member_name,member_company,member_position,member_phone,member_Email,member_user_name,password,sex,status) values('$member_name','$member_company','$member_position','$member_phone','$member_Email','$member_user_name','$password','$sex','1')";
 	 
 	$ret = mysql_query($sql,$link);
 	
@@ -164,84 +241,49 @@ if($method == "addMember"){
 	while($row = mysql_fetch_assoc($ret) ){
 		$member_id = $row["member_id"];
 	}
-	 
-	$sql = "insert into bd_link_member values('$user_id','$user_name','$member_id')";
- 	$ret = mysql_query($sql,$link);
-	
+	 	
 	echo json_encode(array('member_id'=> $member_id));	
 }
 
 
-//create Dir in server
-if($method == "mkdirInServer"){
+//get comemnt
 
-	$my_dir = $_POST["target"];
-
-	$auth = array (
-		'access_token' => $access_token,
-	);
-	echo $access_token;
-  
-  	echo $my_dir;
+if($method == "getComment"){
 	
-	$pcs = new BaiduPCS($auth);
-	$pcs->set_ssl(true);
-
-	/* mkdir */
-	if (!($data = $pcs->create_dir($my_dir))) {
-		echo json_encode(array("error_message"=>$pcs->get_error_message()));
-	} else {
-		echo json_encode($data);
+	$activity_id = $_GET['activity_id'];
+	
+	$sql = "select * from activity_comment where activity_id='$activity_id' ";
+	$ret = mysql_query($sql,$link);
+	
+	
+	$member_user_name_list = array();
+	$comment_list =array();
+	$time_list = array();
+	$i = 0;
+	
+	while($row = mysql_fetch_assoc($ret) ){
+		$member_user_name_list[$i] = $row['member_user_name'];
+		$comment_list[$i] = $row['comment'];
+		$time_list[$i++] = $row['submit_time'];
 	}
-
+	
+	echo json_encode(array('member_user_name_list'=> $member_user_name_list,'comment_list'=>$comment_list,'time_list'=>$time_list));
+	
 }
 
-if($method == "getPhotoList"){
-	$source_dir = $_GET["source_dir"];
-  
- 	$auth = array (
-		'access_token' => $access_token,
-	);
 
-	$pcs = new BaiduPCS($auth);
-	$pcs->set_ssl(true);
+// sign up activity
 
-	/* list */
-	if (!($data = $pcs->list_file($source_dir,"time"))) {
-		echo json_encode(array("error_message"=>$pcs->get_error_message()));
-	} else {
-		$photoList = array();
-      	for($i=0; $i<count($data); $i++){    		
-          	foreach($data[$i] as $key => $value){
-              if($key == 'path'){
-              	$photoList[$i] = $value;
-              }
-            }          	
-        }
-		
-      	echo json_encode(array("photoList"=>$photoList));
-	}
-
-}
-
-//download photo
-if($method == "downloadPhoto"){
-	$source_file = urldecode($_GET['source_file']);
-
-	$auth = array (
-		'access_token' => $access_token,
-	);
-    
-	$pcs = new BaiduPCS($auth);
-	$pcs->set_ssl(true);
-     echo $source_file;
-	/* download photo */
-  if (!($data = $pcs->download_file($source_file))) {
-		echo json_encode(array("error_message"=>$pcs->get_error_message()));
-	} else {
-		echo json_encode(array("content"=>$data));
-	}
-
+if($method == "signUpActivity"){
+	
+	$activity_id = $_POST['activity_id'];
+	$member_id = $_POST['member_id'];
+	
+	$sql = "insert into member_join_activity value('$activity_id','$member_id','0') ";
+	
+	$ret = mysql_query($sql,$link);
+	
+	
 }
 
 //search member 
@@ -267,6 +309,159 @@ if($method == "searchMember"){
 		echo json_encode(array('ret'=> "true"));
 	}
 
+}
+
+if($method == "submitComment"){
+	$comment = $_POST['comment'];
+	$activity_id = $_POST['activity_id'];
+	$member_id = $_POST['member_id'];
+	$member_user_name = $_POST['member_user_name'];
+	
+	$sql = "insert into activity_comment(activity_id,member_id,comment,member_user_name) values('$activity_id','$member_id','$comment','$member_user_name') ";
+	
+	$ret = mysql_query($sql,$link);
+
+}
+
+if($method == "login"){
+	
+	$member_user_name = $_POST['member_user_name'];
+	$member_password = $_POST['member_password'];
+	$flag = 1;
+	
+	$sql = "select member_id,member_user_name,password,sex from member_info ";
+	
+	$ret = mysql_query($sql,$link);
+	
+	while($row = mysql_fetch_assoc($ret) ){
+		 if($member_user_name == $row['member_user_name']){
+		 	if($member_password == $row['password']){
+				$flag = 0;
+				$member_id = $row['member_id'];
+				$sex = $row['sex'];
+				
+				$sql2 = "update member_info set status=1,login_time=date('Y-m-d', time()) where member_id='$member_id'";
+				$ret = mysql_query($sql2,$link);
+			}else{				
+				$flag = 2;
+			}
+		 }
+	}
+	
+	echo json_encode(array('ret'=> $flag,'member_id'=>$member_id,'sex'=>$sex));
+	
+}
+
+if($method == "suggestToNT"){
+	
+	$member_user_name = $_POST['member_user_name'];
+	$member_id = $_POST['member_id'];
+	$suggest = $_POST['suggest_content'];
+	
+	$sql = "insert into member_suggest values('$member_id','$member_user_name','$suggest')";
+	$ret = mysql_query($sql,$link);
+	
+}
+
+if($method == "getMemberInfo"){
+	
+	$member_id = $_GET['member_id'];
+	
+	$sql = "select * from member_info where member_id='$member_id'";
+	$ret = mysql_query($sql,$link);
+	
+	while($row = mysql_fetch_assoc($ret)){
+		$member_user_name = $row['member_user_name'];
+		$password = $row['password'];
+		$member_name = $row['member_name'];
+		$sex = $row['sex'];
+		$member_company = $row['member_company'];
+		$member_position = $row['member_position'];
+		$member_phone = $row['member_phone'];
+		$member_email = $row['member_Email']; 
+	}
+	
+	echo json_encode(array('member_user_name'=> $member_user_name,'password'=>$password,'member_name'=>$member_name,'sex'=>$sex,'member_company'=>$member_company,'member_position'=>$member_position,'member_phone'=>$member_phone,'member_email'=>$member_email,));
+	
+}
+
+
+if($method == "updateMemberInfo"){
+	
+	$member_id = $_POST['member_id'];
+	$member_company = $_POST['member_company'];
+	$member_position = $_POST['member_position'];
+	$member_phone = $_POST['member_phone_number'];
+	$member_Email = $_POST['member_email'];
+	$member_user_name = $_POST['member_user_name'];
+	$password= $_POST['password'];
+	
+	$sql = "update member_info set member_company='$member_company',member_position='$member_position',member_phone='$member_phone',member_Email='$member_Email',member_user_name='$member_user_name',password='$password' where member_id='$member_id'";
+	
+	$ret = mysql_query($sql,$link);
+
+}
+
+if($method == "logout"){
+	$member_id = $_POST['member_id'];
+	
+	$sql = "update member_info set status=0,login_time=date('Y-m-d', time()) where member_id='$member_id'"; 
+	
+	$ret = mysql_query($sql,$link);
+	
+}
+
+//get member status : 0 - offline    1 - online
+if($method == 'getMemberStatus'){
+	
+	$sql = "select * from member_info where status='1' order by login_time  asc";
+	$ret = mysql_query($sql,$link);
+	
+	$member_name_list = array();
+	$company_list = array();
+	$position_list = array();
+	$sex_list = array();
+	
+	$i = 0;
+	
+	while($row = mysql_fetch_assoc($ret)){
+		$member_name_list[$i] = $row['member_name'];
+		$company_list[$i] = $row['member_company'];
+		$position_list[$i] = $row['member_position'];
+		$sex_list[$i++] = $row['sex'];
+	}
+	
+	echo json_encode(array('member_name_list'=>$member_name_list,'company_list'=>$company_list,'position_list'=>$position_list,'sex_list'=>$sex_list));
+	
+}
+
+
+if($method == "getMemberJoinActivityStatus"){
+	
+	$member_id = $_GET['member_id'];
+	
+	$sql = "select * from member_join_activity where member_id='$member_id' and status='1' ";
+	
+	$ret = mysql_query($sql,$link);
+	
+	$activity_id_list = array();
+	$activity_list = array();
+	$i = 0;
+	
+	while($row = mysql_fetch_assoc($ret)){
+		$activity_id = $row['$activity_id'];
+		$activity_id_list[$i] = $activity_id;
+		
+		$sql2 = "select activity_name from activity_info where activity_id='$activity_id'";
+		$ret2 = mysql_query($sql2,$link);
+		while($row2 = mysql_fetch_assoc($ret2)){
+			$activity_list[$i++] = $row2['activity_name'];
+		}
+			
+	}
+	
+	echo json_encode(array('activity_list'=>$activity_list, 'activity_id_list'=> $activity_id_list));
+	
 }
 
 mysql_close($link);
