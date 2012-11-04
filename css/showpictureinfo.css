@@ -1,0 +1,101 @@
+
+* {margin:0;padding:0;}
+
+body{
+	background-image:url(../images/main/image_bigbj.png);
+	width:100%;
+	height:100%;
+}
+
+
+#nav{
+	background-image:url(../images/main/file_tital_bj.png);
+	width:100%;
+	height:44px;
+	position:fixed;
+	z-index:60;
+	top:0px;
+	left:0px;
+}
+
+#nav table{
+	width:100%;
+	height:44px;
+}
+
+#back{
+	position: absolute;
+	z-index: 2;
+	left: 10px;
+	top: 3px;
+	width: 80px;
+	height: 37px;
+	background-image: url(../images/picturelist/picture_button120-60.png);
+	background-repeat: no-repeat;
+	color: #FFF;
+	text-align: center;
+	line-height: 37px;
+	font-size: 90%;
+	text-decoration:none
+}
+
+#title{
+	color:#FFF;
+	font-size:100%;
+	text-align:center
+}
+
+#nav_border{
+	background-image:url(../images/main/file_tital_bj02.png);
+	width:100%;
+	height:4px;
+	position:fixed;
+	z-index:60;
+	top:44px;
+	left:0px;
+}
+
+
+#menu_tool{
+	background-image:url(../images/pictureinfo/editpicture_layer640-90.png);
+	height:45px;
+	width:100%;
+	bottom:0px;
+	left:0px;
+	position:fixed;
+	z-index:60;
+	color:#FFF;
+	
+}
+
+#menu_tool td{
+	text-align:center;
+}
+
+#weibo{
+	width:30px;
+	height:28px;
+	margin-top:8px;
+}
+
+#pcs{
+	width:30px;
+	height:28px;
+	margin-top:8px;
+}
+
+#download_picture{
+	width:30px;
+	height:28px;
+	margin-top:8px;
+}
+
+#content{
+	position:absolute;
+	top:48px;
+	text-align:center;
+}
+
+#picture{
+	max-width:100%;
+}

@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>会员注册 西二旗夜话</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />  
+<meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+
+	
+<link href="css/register.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+</head>
+
+<body>
+
+	<div id="nav">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+        	<tr>
+            	<td width="26%">&nbsp;</td>
+                
+              <td width="39%" id="title">
+                	
+              </td>
+                
+                <td width="35%"><a id="submit" onClick="submitMemberInfo()">提交</a></td>
+            </tr>
+        </table>
+    </div>
+    <div id="nav_border">
+    </div>
+    
+    <div id="content" align="center">
+    	 <form name="form1" method="post" action="" id="member_info_form">
+         	<div>
+    	  <label for="member_user_name">用户名：</label>
+    	  
+    	  <input type="text"  name="member_user_name" id="member_user_name">     	
+        </div>
+         <div>
+        	<label for="member_password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+    	  	<input type="password"  name="member_password" id="member_password">
+      </div>
+       <div>
+        	<label for="user_name">姓&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+    	  	<input type="text" name="user_name" id="user_name">
+        </div>
+        
+        <div>
+        	<label>性&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
+            
+			<label>
+       	          <input name="RadioGroup1" type="radio" id="RadioGroup1_0" value="male" checked>
+       	          男</label>
+            <label>
+       	          <input type="radio" name="RadioGroup1" value="female" id="RadioGroup1_1">
+       	          女</label>
+
+        </div>
+
+		<div>
+        	<label for="user_company">公&nbsp;&nbsp;&nbsp;&nbsp;司：</label>
+    	  	<input type="text" name="user_company" id="user_company">
+        </div>
+        	
+        <div>
+        	<label for="user_position">职&nbsp;&nbsp;&nbsp;&nbsp;位：</label>
+    	  	<input type="text" name="user_position" id="user_position">
+        </div>
+        
+        <div>
+        	<label for="user_phone_nubmer">电&nbsp;&nbsp;&nbsp;&nbsp;话：</label>
+    	  	<input type="tel" name="user_phone_nubmer" id="user_phone_nubmer">
+        </div>
+        
+         <div id="end">
+        	<label for="user_email">邮&nbsp;&nbsp;&nbsp;&nbsp;件：</label>
+    	  	<input type="tel" name="user_email" id="user_email">
+        </div>
+         
+         </form>
+    	<img src="images/member/fillin_bj624-788.png"   id="big_background"/>
+    </div>
+    
+    	
+</body>
+
+<script type="text/javascript" src="js/register.js"></script>
+</html>

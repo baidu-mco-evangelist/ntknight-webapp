@@ -8,12 +8,12 @@ if(sex == "female"){
 }
 
 function mainPageIncoPress(){
-	document.getElementById('mainPageIcon').src = "images/main/file_tital_meicon_press.png";
+	document.getElementById('mainPageIcon').src = "images/main/file_tital_meicon_press220-60.png";
 }
 
 
 function mainPageIconMouseOut(){
-	document.getElementById('mainPageIcon').src = "images/main/file_tital_meicon.png";
+	document.getElementById('mainPageIcon').src = "images/main/file_tital_meicon_220-60.png";
 }
 
 addEventListener('load',function(){

@@ -1,0 +1,118 @@
+
+* {margin:0;padding:0;}
+
+body{
+	background-image:url(../images/main/image_bigbj.png);
+	width:100%;
+	height:100%;
+}
+
+
+#nav{
+	background-image:url(../images/main/file_tital_bj.png);
+	width:100%;
+	height:44px;
+	position:fixed;
+	z-index:20;
+	top:0px;
+	left:0px
+}
+
+#nav table{
+	width:100%;
+	height:44px;
+}
+
+
+#mainPageIcon{
+	width:110px;
+	height:30px;
+	padding-left:8%;
+}
+
+#myNtIcon{	
+	width:22px;
+	height:22px;
+}
+
+#moreInfoIcon{
+	width:27px;
+	height:7px;
+	padding-right:14px;
+	
+}
+
+#nav_border{
+	background-image:url(../images/main/file_tital_bj02.png);
+	width:100%;
+	height:4px;
+	position:fixed;
+	top:44px;
+	z-index:20;
+	left::0px;
+}
+
+#content{
+	position: absolute;
+	top:48px;
+	width: 100%;
+}
+
+#picture{
+	width:60px;
+	height:100px;
+	padding-top:30%;
+}
+
+#comment{
+	color:#999;
+	padding-top:40px;
+}
+
+#activityinfo {
+	padding-top:40px;
+	color:#FFF
+}
+
+#activityinfo a{
+	color:#FFF
+}
+
+#title{
+	margin-top:10px;
+	margin-left:10px;
+	color:#FFF;
+	text-align:left
+}
+
+#banner{
+	margin-top:15px;
+	max-width:95%;
+}
+
+#second_tilte{
+	color:#FFF;
+	font-size:90%;
+	text-align:left;
+	margin-left:10px;
+	margin-top:10px;
+	
+}
+
+#old_activity{
+	
+	margin-left:10px;
+	margin-top:10px;
+	width:94%;
+}
+
+#old_activity tr{
+	background-image:url(../images/mynt/mypage_middlelist612-90.png);
+}
+
+#activity_name{
+	color:#FFF;
+	margin-left:20px;
+	height:45px;
+	line-height:45px;
+}

@@ -1,6 +1,5 @@
-var url =  window.location.search;
+
 var activity_name;
-var activity_id;
 var picture_url;
 var share_list = new Array();
 var access_token;
@@ -9,26 +8,18 @@ var user_id;
 var picture_name;
 var picture_name_list = new Array();
 
-if(url.indexOf("?")!=-1)
+if(window.localStorage)
 {
-	var str = url.substr(1);
-	strs = str.split("&");
-	activity_name = unescape(strs[0].split("=")[1]);
-	activity_id = strs[1].split("=")[1];
-	picture_url = unescape(strs[2].split("=")[1]);
-	picture_name = unescape(strs[3].split("=")[1]);
+	activity_name = window.localStorage.getItem("current_activity_name");
+	picture_url = window.localStorage.getItem("current_picture_url");
+	picture_name = window.localStorage.getItem("current_picture_name");
 }
 
 share_list.push(picture_url);
 picture_name_list.push(picture_name);
 
+
 document.getElementById('picture').src = picture_url;
-
-document.getElementById('content').style.minHeight = window.screen.availHeight+'px' ;
-
-function backToPictureList(){
-	self.location.href="showpicturelist.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
-}
 
 
 function weiboIncoPress(){
@@ -132,11 +123,11 @@ function linkServer(){
 		dataType : 'json',
 		cache : false
 		}).done(function(data) {
-			alert("转存成功！");
+			
 		})
 		.fail(function(data, txt) {
 		})
 		.always(function(data) {
-
+			alert("转存成功！");
 		});
 }

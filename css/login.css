@@ -1,0 +1,117 @@
+* {margin:0;padding:0;}
+
+body{
+	background-image:url(../images/main/image_bigbj.png);
+	width:100%;
+	height:100%;
+}
+
+#nav{
+	background-image:url(../images/main/file_tital_bj.png);
+	width:100%;
+	height:44px;
+	position:fixed;
+	z-index:60;
+	top:0px;
+	left:0px;
+}
+
+#nav table{
+	width:100%;
+	height:44px;
+}
+
+#cancel{
+	position: absolute;
+	z-index: 62;
+	left:20px;
+	top: 3px;
+	width: 80px;
+	height: 37px;
+	background-image:url(../images/picturelist/picture_button120-60.png);
+	background-repeat: no-repeat;
+	text-align: center;
+	line-height: 37px;
+	font-size: 90%;
+	color:#FFF
+}
+
+#register{
+	position: absolute;
+	z-index: 62;
+	right:20px;
+	top: 3px;
+	width: 80px;
+	height: 37px;
+	background-image: url(../images/login/opinion_button120-60.png);
+	background-repeat: no-repeat;
+	text-align: center;
+	line-height: 37px;
+	font-size: 90%;
+	color:#FFF
+}
+
+#title{
+	color:#FFF;
+	font-size:100%;
+	text-align:center
+}
+
+#nav_border{
+	background-image:url(../images/main/file_tital_bj02.png);
+	width:100%;
+	height:4px;
+	position:fixed;
+	top:44px;
+	z-index:60;
+}
+
+
+#content{
+	position: absolute;
+	top: 52px;
+	background-image: url(../images/main/image_bigbj.png);
+	margin-top: 20px;
+	color:#999999;
+	width:100%;
+}
+
+#member_info_form div{
+	background-image:url(../images/member/fillin_midlist532-90.png);
+	height:50px;
+	line-height:40px;
+	padding-left:15px;
+	width:90%;
+	font-size:100%;
+	text-align:left;	
+}
+
+#member_info_form div input{
+	width:60%;
+	height:40px;
+	background:none;
+	border:none;
+	color:#999999;
+	font-size:100%;	
+}
+
+
+#login_bg{
+	
+	position:absolute;
+	top:180px;
+	height:45px;
+	text-align:center;
+	line-height:45px;
+	width:100%;
+}
+
+#login_bg_picture{
+	
+	background-image:url(../images/login/login_button_press612-90.png);
+	width:270px;
+	height:40px;
+	margin-top:30px;
+	line-height:40px;
+	color:#000
+}

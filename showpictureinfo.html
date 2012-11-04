@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>照片信息 西二旗夜话</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />  
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
+
+<link href="css/showpictureinfo.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1407436347" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="http://openapi.baidu.com/connect/js/v2.0/featureloader"></script>
+</head>
+
+
+<body>
+
+	<div id="nav">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+        	<tr>
+            	<td width="29%">
+           		  <a id="back" href="showpicturelist.html">活动照片</a>
+           	  </td>
+                
+                <td width="42%" id="title">
+                	Image
+                </td>
+                
+                <td width="29%"></td>
+            </tr>
+        </table>
+    </div>	
+    
+    <div id="nav_border">
+    </div>
+    
+    <div id="content">
+			<img id="picture" />
+    </div>
+    
+    <div id="menu_tool">
+		<table width="100%">
+        	<tr>
+            	<td width="33.33333%">
+                	<img src="images/pictureinfo/editpicture_share44-44.png" onClick="shareToWeiBo()" onMouseOver="weiboIncoPress()" onMouseOut="weiboIconMouseOut()" id="weibo"/>
+                  
+                </td>
+                <td width="33.33333%">
+                	<img src="images/pictureinfo/editpicture_save_50-44.png" onClick="saveToPCS()" onMouseOver="cloudIncoPress()" onMouseOut="cloudIconMouseOut()" id="pcs"/>
+                </td>
+                <td width="33.33333%">
+                	<img src="images/pictureinfo/editpicture_down_44-44.png" onClick="download()" onMouseOver="downloadIncoPress()" onMouseOut="downloadIconMouseOut()" id="download_picture"/>
+                </td>
+            </tr>
+        </table>
+	</div>
+</body>
+<script type="text/javascript" src="js/showpictureinfo.js"> </script>
+</html>

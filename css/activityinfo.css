@@ -1,0 +1,156 @@
+#content{
+	text-align:center;
+	
+}
+
+#detail_image_bg{
+	margin-top: 2.6%;
+	width:90%;
+	height:87%;
+}
+
+#activity_picture{
+	position: absolute;
+	z-index: 2;
+	width:32.1875%; 
+	height:20.417%;
+	left:11.875%;
+	top:14.912%
+	
+}
+
+#activity_title{
+	position: absolute;
+	z-index: 2;
+ 
+	height:10.417%;
+	left:8.875%;
+	top:5.912%;
+	color:#fff;
+	font-size:120%
+	overflow:auto;
+	white-space:nowrap;
+}
+
+#detail_time_icon{
+	position: absolute;
+	z-index: 2;
+	width:17px;
+	height:17px;
+	left:47.875%;
+	top:15.912%
+}
+
+#time_info{
+	position: absolute;
+	z-index: 2;
+	width:39%;
+	left:54.875%;
+	top:15.912%;
+	color:#fff;
+	text-align:left;
+	overflow:auto;
+	white-space:nowrap;
+}
+
+
+#detail_person_icon{
+	position: absolute;
+	z-index: 2;
+	width:15px;
+	height:18px;
+	left:47.875%;
+	top:22.912%
+}
+
+#current_person_info{
+	position: absolute;
+	z-index: 2;
+	left:54.875%;
+	top:22.912%;
+	color:#fff;
+}
+
+#detail_map_icon{
+	position: absolute;
+	z-index: 2;
+	width:15px;
+	height:22px;
+	left:47.875%;
+	top:29.912%
+}
+
+#address_info{
+	position: absolute;
+	z-index: 2;
+	width:39%;
+	left:54.875%;
+	top:29.912%;
+	color:#fff;
+	overflow:auto;
+	white-space:nowrap;
+	text-align:left;
+}
+
+#loadLBS{
+	position: absolute;
+	z-index: 2;
+	left:60.875%;
+	top:35.912%;
+	color:#fff;
+}
+
+#join_activity{
+	background-image:url(../images/activity_info/detail_button84x34.png);
+	position: absolute;
+	width:84px;
+	height:34px;
+	z-index: 2;
+	left:49.875%;
+	top:42.912%;
+	color:#fff;
+	line-height:34px;
+}
+
+#detail_line{
+	background-image:url(../images/activity_info/detail_line.png);
+	position: absolute;
+	z-index: 2;
+	width:89%;
+	height:2px;
+	left:5.875%;
+	top:53.912%;
+}
+
+#introduce_title{	
+	position: absolute;
+	z-index: 2;
+	left:8.875%;
+	top:54.912%;
+	color:#fff;
+}
+
+#detail_comment_icon{
+	position: absolute;
+	z-index: 2;
+	left:51.875%;
+	top:57.612%;
+	color:#999;
+}
+
+#detail_picture_icon{
+	position: absolute;
+	z-index: 2;
+	left:73.875%;
+	top:57.612%;
+	color:#999;
+}
+
+
+#activity_introduce{
+	position: absolute;
+	z-index: 2;
+	left:9.275%;
+	top:65.912%;
+	color:#999;
+}

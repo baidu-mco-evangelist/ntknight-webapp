@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>更多</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />  
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+
+<link href="css/moreinfopage.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div id="nav">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+        	<tr>
+            	<td width="65%">
+                	<img src="images/main/file_tital_meicon_220-60.png" id="mainPageIcon" onClick="loadMainPage()" onMouseOver="mainPageIncoPress()" onMouseOut="mainPageIconMouseOut()"/> 
+                </td>
+                
+                <td width="21%">
+                	<img src="images/main/file_tital_meicon.png" id="myNtIcon" onClick="loadMyNtPage()"   onMouseOver="myNtIncoPress()" onMouseOut="myNtIncoMouseOut()"/>
+                </td>
+                
+                <td width="14%" >
+                	<img src="images/main/file_tital_moreicon_press.png" width="64"  id="moreInfoIcon" onClick="loadMoreInfoPage()"/>
+                </td>
+            </tr>
+        </table>
+    </div>	
+    
+    <div id="nav_border">
+    </div>
+    
+<div id="content" align="center">
+
+	<div>
+   
+    <img  src="images/more/fillin_avatar126-126.png"  id="person_icon" />
+
+    <p id="member_user_name"></p>
+     <img src="images/more/more_list_612-90.png" id="myinfo" /> 
+    <p id="member_info_title">会员信息</p>
+     <img src="images/more/mypage_arrow25-25.png" onClick="loadMemberInfoPage()" id="member_info_icon"/>
+     <p id="nt_title">夜话介绍</p>
+    <p id="nt_target_title">目的</p>
+    <img src="images/more/more_list_612-90.png" id="nt_target" />
+     <p id="nt_target_content">业界最有趣的沙龙！</p>
+     
+     <p id="nt_company_title">单位</p>
+    <img src="images/more/more_list_612-90.png" width="285" height="48" id="nt_company" />
+     <p id="nt_company_content">百度</p>
+     
+     <p><a name="logout" id="logout" onClick="logout()">退出当前账户</a></p>
+    <p id="feedback_title">意见反馈</p>
+    <img src="images/more/more_list_612-90.png" width="62" id="feedback" /><img src="images/more/mypage_arrow25-25.png" onClick="loadFeedBackPage()" id="feedback_icon"/></div>
+    </div>
+</body>
+<script type="text/javascript" src="js/moreinfopage.js"></script>
+</html>

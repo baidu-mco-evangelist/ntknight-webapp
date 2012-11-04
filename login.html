@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登陆</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />  
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />  
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+
+<link href="css/login.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+	<div id="nav">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+        	<tr>
+            	<td width="26%"><a id="cancel" onClick="cancel()">取消</a></td>
+                
+              <td width="39%" id="title">
+                	
+              </td>
+                
+                <td width="35%"><a id="register" onClick="register()">注册</a></td>
+            </tr>
+        </table>
+    </div>	
+    
+	<div id="nav_border">
+    </div>
+    
+<div id="content" align="center">
+                 <form name="form1" method="post" action="" id="member_info_form">
+                    <div>
+                      <label for="member_user_name">用户名：</label>
+                      
+                      <input type="text"  name="member_user_name" id="member_user_name">     	
+                    </div>
+            
+                    <div>
+                      <label for="member_password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                      
+                      <input type="password"  name="member_password" id="member_password">     	
+                    </div>
+                    
+                 </form>
+                 
+                 <div id="login_bg_picture" >
+                    
+							<a id="login" onClick="login()">登陆</a> 
+                    </div>
+                 
+        </div>
+
+
+</body>
+<script type="text/javascript" src="js/login.js"></script>
+</html>

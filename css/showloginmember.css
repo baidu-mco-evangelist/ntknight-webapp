@@ -1,0 +1,168 @@
+
+
+* {margin:0;padding:0;}
+
+body{
+	background-image:url(../images/main/image_bigbj.png);
+	width:100%;
+	height:100%;
+}
+
+
+#nav{
+	background-image:url(../images/main/file_tital_bj.png);
+	width:100%;
+	height:44px;
+	position:fixed;
+	z-index:60;
+	top:0px;
+	left:0px;
+}
+
+#nav table{
+	width:100%;
+	height:44px;
+}
+
+#back{
+	position: absolute;
+	z-index: 2;
+	left: 10px;
+	top: 4px;
+	width: 67px;
+	height: 37px;
+	text-decoration:none;
+	background-image: url(../images/comment/comment_back_button60-36.png);
+	background-repeat: no-repeat;
+	color: #FFF;
+	padding-left: 20px;
+	line-height: 37px;
+}
+
+
+#nav_border{
+	background-image:url(../images/main/file_tital_bj02.png);
+	width:100%;
+	height:4px;
+	position:fixed;
+	z-index:60;
+	top:44px;
+	left:0px;
+}
+
+#editcomment{
+	position: absolute;
+	z-index: 62;
+	right:20px;
+	top: 3px;
+	width: 80px;
+	height: 37px;
+	background-image: url(../images/login/opinion_button120-60.png);
+	background-repeat: no-repeat;
+	text-align: center;
+	line-height: 37px;
+	font-size: 90%;
+	color:#FFF
+}
+
+#submit_comment{
+	position:fixed;
+	z-index:60;
+	bottom:0px;
+	width:100%;
+	height:45px;
+	line-height:45px;
+	background-image:url(../images/comment/comment_article_03_640-90.png);
+}
+
+#comment_text{
+	background-image:url(../images/main/image_bigbj.png);
+	margin-top:8px;
+	margin-left:10px;
+	width:64%;
+	height:30px;
+	line-height:30px;
+	color:#6B6B6B
+}
+
+#submit{
+	position:fixed;
+	z-index:62;
+	bottom:0px;
+	width:74px;
+	height:38px;
+	margin-left:10px;	
+	background-image:url(../images/comment/comment_check_button128-66.png);
+	text-align:center;
+	line-height:38px;
+	color:#FFF;
+	background-repeat:no-repeat;
+	
+}
+
+
+#content{
+	width:100%;
+	position:absolute;
+	top:58px;
+	left:10px;
+}
+
+#content table{
+	width:90%;
+	padding-left:8px;
+}
+
+#big_background{
+	position:relative;
+	z-index:2;
+	width:93%;
+	height:100px;
+	-webkit-box-shadow:5px 5px 5px rgba(0,0,0,.6);
+	box-shadow:5px 5px 5px rgba(0,0,0,.6);
+}
+
+#icon_border{
+	position: absolute;
+	z-index: 3;
+	left: 14px;
+	margin-top: 11px;
+	width: 84px;
+	height: 79px;
+	
+}
+#person_icon{
+	position: absolute;
+	z-index: 4;
+	left: 18px;
+	margin-top:14px;
+	width: 76px;
+	height: 73px;
+	
+}
+
+#comment_info{
+	position: absolute;
+	z-index: 7;
+	left: 105px;
+	margin-top: -90px;
+	width: 60%;
+	height: 72px;
+	color:#FFF
+
+}
+
+#comment{
+	width:90%;
+	height:auto;
+	overflow:auto;
+	white-space:nowrap;
+	padding-top:15px;
+	color:#999;
+}
+
+#loginmember{
+	width:94%;
+
+	height:85%;
+}

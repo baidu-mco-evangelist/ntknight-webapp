@@ -1,0 +1,244 @@
+* {margin:0;padding:0;}
+
+body{
+	background-image:url(../images/main/image_bigbj.png);
+	width:100%;
+	height:100%;
+}
+
+
+#nav{
+	background-image:url(../images/main/file_tital_bj.png);
+	width:100%;
+	height:44px;
+	position:fixed;
+	z-index:20;
+	left:0px;
+}
+
+#nav table{
+	width:100%;
+	height:44px;
+}
+
+
+#mainPageIcon{
+	width:110px;
+	height:30px;
+	padding-left:8%;
+}
+
+#myNtIcon{	
+	width:22px;
+	height:22px;
+}
+
+#moreInfoIcon{
+	width:27px;
+	height:7px;
+	padding-right:14px;
+	
+}
+
+#nav_border{
+	background-image:url(../images/main/file_tital_bj02.png);
+	width:100%;
+	height:4px;
+	position:fixed;
+	top:44px;
+	z-index:20;
+	left:0px;
+}
+
+#content{
+	position: absolute;
+	top: 49px;
+	width: 100%;
+	left: 1px;
+	height: 412px;
+}
+
+
+#person_icon{
+	position: absolute;
+	top: 2%;
+	left: 5.3%;
+	z-index: 3;
+	width: 72px;
+}
+
+#member_user_name{
+	color: #FFF;
+	position: absolute;
+	top: 6%;
+	left: 10%;
+	z-index: 3;
+	font-size: 120%;
+	width: 197px;
+	height: 40px;
+	
+}
+
+#myinfo{
+	position: absolute;
+	top: 24%;
+	left: 4.8%;
+	z-index: 3;
+	font-size: 120%;
+	width: 90%;
+	height: 49px;
+}
+
+#member_info_title{
+	color: #999999;
+	position: absolute;
+	top:24.5%;
+	left: 7.3%;
+	z-index: 4;
+	font-size: 100%;
+	width: 81px;
+	height: 40px;
+	line-height: 40px;
+}
+
+
+#nt_title{
+	position: absolute;
+	top:37.5%;
+	z-index: 5;
+	left: 5.3%;
+	width: 111px;
+	color: #999;
+	font-size: 90%
+}
+
+#member_info_icon{
+	position: absolute;
+	top:26.5%;
+	left:82%;
+	z-index: 4;
+	font-size: 100%;
+	width: 25px;
+	height: 25px;
+	line-height: 40px;
+}
+
+
+#nt_target{
+	position: absolute;
+	top: 43%;
+	left: 4.8%;
+	z-index: 3;
+	font-size: 100%;
+	width:90%;
+	height: 49px;
+}
+
+#nt_target_title{
+	position: absolute;
+	top: 44%;
+	left: 7.3%;
+	z-index: 4;
+	font-size: 100%;
+	width: 56px;
+	height: 45px;
+	line-height: 45px;
+	color: #999999
+}
+
+#nt_target_content{
+	position: absolute;
+	top: 44%;
+	left: 30%;
+	z-index: 4;
+	font-size: 100%;
+	width: 202px;
+	height: 42px;
+	line-height: 45px;
+	color: #d7d7d7;
+	text-align:left
+}
+
+#nt_company{
+	position: absolute;
+	top: 54.7%;
+	left: 4.8%;
+	z-index: 3;
+	font-size: 100%;
+	width: 90%;
+	height: 49px;
+}
+
+#nt_company_title{
+	position: absolute;
+	top: 55.7%;
+	left: 7.3%;
+	z-index: 4;
+	font-size: 100%;
+	width: 56px;
+	height: 45px;
+	line-height: 45px;
+	color: #999999;
+	
+	
+}
+
+#nt_company_content{
+	position: absolute;
+	top: 55.7%;
+	left: 30%;
+	z-index: 4;
+	font-size: 100%;
+	width: 202px;
+	height: 42px;
+	line-height: 45px;
+	color: #d7d7d7;
+	text-align:left
+}
+
+#feedback{
+	position: absolute;
+	top: 71%;
+	left: 4.8%;
+	z-index: 3;
+	font-size: 120%;
+	width: 90%;
+	height: 49px;
+}
+
+#feedback_title{
+	position: absolute;
+	top: 71%;
+	left: 7.3%;
+	z-index: 4;
+	font-size: 120%;
+	width: 88px;
+	height: 44px;
+	color: #999;
+	line-height: 48px;
+}
+
+#feedback_icon{
+	position: absolute;
+	top: 74%;
+	left: 80%;
+	z-index: 4;
+	width: 25px;
+	height: 25px;
+	
+}
+
+#logout{
+	position: absolute;
+	z-index:6
+	bottom:0px;
+	height: 42px;
+	background-image: url(../images/more/more_button612-90.png);
+	width: 90%;
+	left: 4.8%;
+	top: 90%;
+	text-align: center;
+	line-height: 41px;
+	color: #FFF
+}
+

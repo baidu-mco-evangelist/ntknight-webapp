@@ -5,6 +5,8 @@
 }
 */
 
+
+
 addEventListener('load',function(){
 	setTimeout(function(){window.scrollTo(0,1); },100);
 });
@@ -34,8 +36,8 @@ function loadMyNtPage()
 			self.location.href="myntpage.html";
 			
 		}else{
-			
-			self.location.href="login.html?activity_name=''&activity_id=''&type="+escape("loadMyNtPage");
+			window.localStorage.setItem("current_action","loadMyNtPage");
+			self.location.href="login.html";
 			
 		}
 	}else{
@@ -63,8 +65,8 @@ function loadMoreInfoPage()
 			self.location.href="moreinfopage.html";
 			
 		}else{
-			
-			self.location.href="login.html?activity_name=''&activity_id=''&type="+escape("loadMoreInfoPage");
+			window.localStorage.setItem("current_action","loadMoreInfoPage");
+			self.location.href="login.html";
 			
 		}
 	}else{
@@ -91,22 +93,26 @@ $.ajax({
 		activityAddressList = data.activityAddressList;  //activity address list
 		activityTimeList = data.activityTimeList;        //activity time list
 		currentPersonList = data.currentPersonList;
+		mainBannerList = data.mainBannerList;
+		myntBannerList = data.myntBannerList;
+		mainNewBannerList = data.mainNewBanner;
 		
 		for( i=0; i< activityList.length ; i++){
 						
 			var newTr = document.getElementById('activityList').insertRow();
 			var newTd1 = newTr.insertCell();
-
+			if( flagList[i] == 0){
+				newTd1.innerHTML='<img src="'+ mainNewBannerList[i]  +'"  onClick="loadActivityInfo(\''+activityList[i]+'\',\''+ activityIdList[i]+'\')"/>';
+			}else{
+				newTd1.innerHTML='<img src="'+ mainBannerList[i]  +'"  onClick="loadActivityInfo(\''+activityList[i]+'\',\''+ activityIdList[i]+'\')"/>';
+			}
 		}
 						
 			if(activityList.length == 1)
 			{
 				var newTr = document.getElementById('activityList').insertRow();
 				var newTd1 = newTr.insertCell();
-				newTd1.innerHTML='';	
-				
-				var newTd2 = newTr.insertCell();				
-				newTd2.innerHTML='';
+				newTd1.innerHTML='<img src="images/main/ntbanner.png" />';	
 								
 			}
 			
@@ -119,7 +125,12 @@ $.ajax({
 	});
 
 //load activity infomation page	
-function loadActivityInfo(activityName,activityId){
+function loadActivityInfo(activity_name,activity_id){
+	if(window.localStorage)
+	{
+		window.localStorage.setItem('current_activity_name',activity_name);
+		window.localStorage.setItem('current_activity_id',activity_id);
+	}
 	self.location.href="activityinfo.html";
 }
 

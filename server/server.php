@@ -34,7 +34,7 @@ mysql_query("set names utf8",$link);
 //get activity list from mysql
 if($method == "getActivityList"){
 
-	$sql = "select activity_id,activity_name,activity_time,activity_address,flag from activity_info order by activity_id asc";	
+	$sql = "select activity_id,activity_name,activity_time,activity_address,flag,main_banner,myntbanner,main_new_banner from activity_info order by activity_id asc";	
 	$ret = mysql_query($sql,$link);
 	
 	$i = 0;
@@ -44,15 +44,20 @@ if($method == "getActivityList"){
 	$flagList = array();
 	$currentPerson = array();
 	$activityIdList = array();
-
+	$mainBannerList = array();
+	$myntBannerList = array();
+	$mainNewBanner = array();
 	
 	while($row = mysql_fetch_assoc($ret) ){
 		$activityIdList[$i] = $row['activity_id'];
 		$activityList[$i] = $row['activity_name'];
 		$activityTimeList[$i] = $row['activity_time'];
 		$activityAddress[$i] = $row['activity_address'];
+		$mainBannerList[$i] = $row['main_banner'];
+		$myntBannerList[$i] = $row['myntbanner'];
+		$mainNewBanner[$i] = $row['main_new_banner'];
 		
-		$activity_id = $row['activity_id'];
+ 		$activity_id = $row['activity_id'];
 		$selectIDSql = "select count(member_id) from member_join_activity where activity_id='$activity_id'";
 		$ret2 = mysql_query($selectIDSql,$link);
 		
@@ -63,7 +68,7 @@ if($method == "getActivityList"){
 		$flagList[$i++] = $row['flag'];
 	}
 	
-	echo json_encode(array('activityIdList'=>$activityIdList,'activityList'=> $activityList,'activityTimeList'=>$activityTimeList,'activityAddressList'=>$activityAddress,'flagList'=>$flagList,'currentPersonList'=>$currentPerson));
+	echo json_encode(array('activityIdList'=>$activityIdList,'activityList'=> $activityList,'activityTimeList'=>$activityTimeList,'activityAddressList'=>$activityAddress,'flagList'=>$flagList,'currentPersonList'=>$currentPerson,'mainBannerList'=>$mainBannerList,'myntBannerList'=>$myntBannerList,'mainNewBanner'=>$mainNewBanner));
 
 }
 
@@ -178,6 +183,7 @@ if($method == 'savePhotoToPCS'){
 	for($i=0; $i<count($picture_name_list); $i++){
 
 		$object = '/' . $activity_name . '/' . $picture_name_list[$i];
+		echo $object;
 		$fileWriteTo = './a.' . time () . '.png';
 		
 	/*	$response = $baiduBCS->create_object ( $bucket, $object, $fileUpload );
@@ -252,22 +258,31 @@ if($method == "getComment"){
 	
 	$activity_id = $_GET['activity_id'];
 	
-	$sql = "select * from activity_comment where activity_id='$activity_id' ";
+	$sql = "select * from activity_comment where activity_id='$activity_id' order by submit_time asc";
 	$ret = mysql_query($sql,$link);
 	
 	
 	$member_user_name_list = array();
 	$comment_list =array();
 	$time_list = array();
+	$sex_list = array();
 	$i = 0;
 	
 	while($row = mysql_fetch_assoc($ret) ){
 		$member_user_name_list[$i] = $row['member_user_name'];
+		$member_id = $row['member_id'];
+		$sql2 = "select sex from member_info where member_id='$member_id'";
+		$ret2 = mysql_query($sql2,$link);
+		
+		while($row2 = mysql_fetch_assoc($ret2) ){
+			$sex_list[$i] = $row2['sex'];
+		}
+		
 		$comment_list[$i] = $row['comment'];
 		$time_list[$i++] = $row['submit_time'];
 	}
 	
-	echo json_encode(array('member_user_name_list'=> $member_user_name_list,'comment_list'=>$comment_list,'time_list'=>$time_list));
+	echo json_encode(array('member_user_name_list'=> $member_user_name_list,'comment_list'=>$comment_list,'time_list'=>$time_list,'sex_list'=>$sex_list));
 	
 }
 
@@ -279,10 +294,30 @@ if($method == "signUpActivity"){
 	$activity_id = $_POST['activity_id'];
 	$member_id = $_POST['member_id'];
 	
-	$sql = "insert into member_join_activity value('$activity_id','$member_id','0') ";
+	$sql = "insert into member_join_activity value('$activity_id','$member_id','1') ";
 	
 	$ret = mysql_query($sql,$link);
 	
+	
+}
+
+//Judge whether the user registration
+if($method == "isSignUp"){
+	
+	$activity_id = $_POST['activity_id'];
+	$member_id = $_POST['member_id'];
+	
+	$sql = "select status from member_join_activity  where activity_id='$activity_id' and member_id='$member_id' ";
+	
+	$ret = mysql_query($sql,$link);
+	
+	
+	
+	while($row = mysql_fetch_assoc($ret) ){
+		 $status = $row['status'];
+	}
+	
+	echo json_encode(array('status'=>$status));
 	
 }
 
@@ -339,8 +374,8 @@ if($method == "login"){
 				$flag = 0;
 				$member_id = $row['member_id'];
 				$sex = $row['sex'];
-				
-				$sql2 = "update member_info set status=1,login_time=date('Y-m-d', time()) where member_id='$member_id'";
+				$current_time = date('Y-m-d H:i:s', time());
+				$sql2 = "update member_info set status=1,login_time='$current_time' where member_id='$member_id'";
 				$ret = mysql_query($sql2,$link);
 			}else{				
 				$flag = 2;
@@ -404,8 +439,8 @@ if($method == "updateMemberInfo"){
 
 if($method == "logout"){
 	$member_id = $_POST['member_id'];
-	
-	$sql = "update member_info set status=0,login_time=date('Y-m-d', time()) where member_id='$member_id'"; 
+	$current_time = date('Y-m-d H:i:s', time());
+	$sql = "update member_info set status=0,login_time='$current_time' where member_id='$member_id'"; 
 	
 	$ret = mysql_query($sql,$link);
 	
@@ -440,27 +475,31 @@ if($method == "getMemberJoinActivityStatus"){
 	
 	$member_id = $_GET['member_id'];
 	
-	$sql = "select * from member_join_activity where member_id='$member_id' and status='1' ";
-	
+	$sql = "select * from member_join_activity where member_id='$member_id' and status='2' ";
 	$ret = mysql_query($sql,$link);
 	
 	$activity_id_list = array();
 	$activity_list = array();
+	$flag_list = array();
+	$mynt_banner_list = array();
 	$i = 0;
 	
 	while($row = mysql_fetch_assoc($ret)){
-		$activity_id = $row['$activity_id'];
+		$activity_id = $row['activity_id'];
 		$activity_id_list[$i] = $activity_id;
 		
-		$sql2 = "select activity_name from activity_info where activity_id='$activity_id'";
+		$sql2 = "select activity_name,flag,myntbanner  from activity_info where activity_id='$activity_id'";
+		
 		$ret2 = mysql_query($sql2,$link);
 		while($row2 = mysql_fetch_assoc($ret2)){
-			$activity_list[$i++] = $row2['activity_name'];
+			$activity_list[$i] = $row2['activity_name'];
+			$flag_list[$i] = $row2['flag'];
+			$mynt_banner_list[$i++] = $row2['myntbanner'];
 		}
 			
 	}
 	
-	echo json_encode(array('activity_list'=>$activity_list, 'activity_id_list'=> $activity_id_list));
+	echo json_encode(array('activity_list'=>$activity_list, 'activity_id_list'=> $activity_id_list,'flag_list'=>$flag_list,'mynt_banner_list'=>$mynt_banner_list));
 	
 }
 

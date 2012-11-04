@@ -3,8 +3,7 @@ addEventListener('load',function(){
 });
 
 
-function loadMainPage()
-{
+function loadMainPage(){
 	self.location.href="mainpage.html";
 }
 
@@ -43,17 +42,15 @@ function loadMoreInfoPage()
 }
 
 
-var url =  window.location.search;
 var activity_name;
 var activity_id;
 var member_id;
+var status;
 
-if(url.indexOf("?")!=-1)
+if(window.localStorage)
 {
-	var str = url.substr(1);
-	strs= str.split("&");
-	activity_name = unescape(strs[0].split("=")[1]);
-	activity_id = strs[1].split("=")[1];
+	activity_name = window.localStorage.getItem("current_activity_name");
+	activity_id =  window.localStorage.getItem("current_activity_id");
 }
 
 document.getElementById('activity_title').innerHTML = activity_name;
@@ -79,10 +76,17 @@ $.ajax({
 		count_picture = data.count_picture;
 		count_comment = data.count_comment;
 		
+		if(window.localStorage){
+			
+			window.localStorage.setItem("current_activity_address",activity_address);
+			window.localStorage.setItem("current_activity_flag", flag);
+		}
+		
 		document.getElementById('time_info').innerHTML = activity_time;
+		
 		document.getElementById('current_person_info').innerHTML = count_person+'人';
 		
-		document.getElementById('address_info').innerHTML = activity_address+'&nbsp;&nbsp;&nbsp;<a href="BaiduLBS.html?activity_address='+escape(activity_address) +'"  id="loadLBS" style="color:#FFF">查看地图</a>';
+		document.getElementById('address_info').innerHTML = activity_address;
 		
 		document.getElementById('activity_introduce').innerHTML = activity_introduce;
 		
@@ -106,25 +110,59 @@ $.ajax({
 	});
 
 function loadShowPictureList(){
-	self.location.href="showpicturelist.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+	self.location.href="showpicturelist.html";
 }
 
 function loadShowCommentList(){
-	self.location.href="comment.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+	self.location.href="comment.html";
 }
 
+//join activity function
 function joinActivity(){
 	if(window.localStorage)
 	{	
 		if(window.localStorage.getItem('NT_user_name') && window.localStorage.getItem('NT_user_id')){
 			member_id = localStorage.getItem('NT_user_id');
-			signUpActivity();
+			isSignUp();
 		}else{
-			self.location.href="login.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id+"&type="+escape("joinactivity");
+			window.localStorage.setItem("current_action","joinactivity");
+			self.location.href="login.html";
 		}
 	}else{
 	}
 }
+
+
+function isSignUp(){
+	var postData = {
+		'method': 'isSignUp',
+		'activity_id':activity_id,
+		'member_id' : member_id,
+	};
+	$.ajax({
+		url : '/server/server.php', 
+		data : postData,
+		type : 'POST', 
+		dataType : 'json',
+		cache : false
+		}).done(function(data) {
+	  		status = data.status;
+			
+			if(status == 'null'){
+				signUpActivity();
+				
+			}else{
+				alert("这次活动您已经报过了哦！请等待我们的审核！");
+			}
+		})
+		.fail(function(data, txt) {
+		  //					alert("Internal Server Error" + data);
+		})
+		.always(function(data) {
+		});	
+	
+}
+
 
 function signUpActivity(){
 	
@@ -140,7 +178,7 @@ function signUpActivity(){
 		dataType : 'json',
 		cache : false
 		}).done(function(data) {
-	  		self.location.href="feedback.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+			alert("报名成功，请等待审核！");
 		})
 		.fail(function(data, txt) {
 		  //					alert("Internal Server Error" + data);

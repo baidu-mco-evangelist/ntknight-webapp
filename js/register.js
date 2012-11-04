@@ -1,22 +1,18 @@
 // JavaScript Document
-
-var url =  window.location.search;
 var activity_name;
 var activity_id;
 var check_flag = 0;
 //
-var flag;
+var action;
 
 var member_id;
 
 
-if(url.indexOf("?")!=-1)
+if(window.localStorage)
 {
-	var str = url.substr(1);
-	strs= str.split("&");
-	activity_name = unescape(strs[0].split("=")[1]);
-	activity_id = strs[1].split("=")[1];
-	flag = strs[2].split("=")[1];
+	activity_name = window.localStorage.getItem("current_activity_name");
+	activity_id = window.localStorage.getItem("current_activity_id");
+	action = window.localStorage.getItem("current_action");
 }
 
 function isEmail(str){ 
@@ -126,8 +122,7 @@ function submitMemberInfo(){
 				window.localStorage.setItem('NT_user_sex',sex);
 				
 				if(action == "joinactivity"){
-					signUpActivity();
-					self.location.href="feedback.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+					isSignUp();
 					
 				}
 				if(action == "loadMyNtPage"){
@@ -135,11 +130,11 @@ function submitMemberInfo(){
 				}
 				
 				if(action == "comment"){
-					self.location.href="comment.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+					self.location.href="comment.html";
 				}
 				
 				if(action == "loadMoreinfoPage"){
-					self.location.href="moreinfopage.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+					self.location.href="moreinfopage.html";
 				}
 		  
 			})
@@ -152,7 +147,7 @@ function submitMemberInfo(){
 	}else{
 		if(check_flag == 1)
 		{
-			alert("值不能为空");
+			
 		}else{
 			
 			if(check_flag == 2)
@@ -167,11 +162,12 @@ function submitMemberInfo(){
 
 }
 
-function signUpActivity(){
-	
+
+
+function isSignUp(){
 	var postData = {
-		'method': 'signUpActivity',
-		'activity_id': activity_id,
+		'method': 'isSignUp',
+		'activity_id':activity_id,
 		'member_id' : member_id,
 	};
 	$.ajax({
@@ -181,7 +177,40 @@ function signUpActivity(){
 		dataType : 'json',
 		cache : false
 		}).done(function(data) {
-	  		self.location.href="feedback.html?activity_name="+escape(activity_name)+"&activity_id="+activity_id;
+	  		status = data.status;
+			
+			if(status == 'null'){
+				signUpActivity();
+				
+			}else{
+				alert("这次活动您已经报过了哦！请等待我们的审核！");
+			}
+		})
+		.fail(function(data, txt) {
+		  //					alert("Internal Server Error" + data);
+		})
+		.always(function(data) {
+		});	
+	
+}
+
+
+function signUpActivity(){
+	
+	var postData = {
+		'method': 'signUpActivity',
+		'activity_id':activity_id,
+		'member_id' : member_id,
+	};
+	$.ajax({
+		url : '/server/server.php', 
+		data : postData,
+		type : 'POST', 
+		dataType : 'json',
+		cache : false
+		}).done(function(data) {
+			alert("报名成功，请等待审核！");
+			self.location.href = "activityinfo.html";
 		})
 		.fail(function(data, txt) {
 		  //					alert("Internal Server Error" + data);
